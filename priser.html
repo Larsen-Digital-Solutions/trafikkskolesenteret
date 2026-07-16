@@ -265,6 +265,45 @@
       </div>
     </section>
 
+    <!-- ===================== PRISKALKULATOR ===================== -->
+    <section class="section section--soft" id="kalkulator">
+      <div class="container">
+        <div class="section-head section-head--center reveal">
+          <span class="eyebrow eyebrow--center">Priskalkulator</span>
+          <h2>Regn ut din pris</h2>
+          <p class="measure" style="margin:.9rem auto 0">Velg klasse og antall kjøretimer, så får du et ærlig estimat med alt det obligatoriske – regnet ut fra vår faktiske prisliste.</p>
+        </div>
+        <div class="estimator reveal" data-calc>
+          <div class="est__controls">
+            <div class="est__field">
+              <div class="est__label"><span><span class="est__step">1</span> Velg klasse</span></div>
+              <div class="seg" data-calc-classes role="tablist" aria-label="Velg klasse"></div>
+            </div>
+            <div class="est__field" data-calc-timewrap>
+              <div class="est__label"><span><span class="est__step">2</span> Antall kjøretimer</span></div>
+              <div class="stepper">
+                <button class="stepper__btn" type="button" data-calc-dec aria-label="Færre kjøretimer">−</button>
+                <span class="stepper__val"><span data-calc-timeval>12</span><small data-calc-timeprice>900 kr per time à 45 min</small></span>
+                <button class="stepper__btn" type="button" data-calc-inc aria-label="Flere kjøretimer">+</button>
+              </div>
+            </div>
+            <div class="est__field">
+              <div class="est__label"><span><span class="est__step" data-calc-itemstep>3</span> Kurs og obligatorisk opplæring</span></div>
+              <div class="est-pack"><ul class="est-pack__list" data-calc-items></ul></div>
+              <p class="est__note" data-calc-note style="font-size:.82rem;color:var(--muted);margin:.7rem 0 0"></p>
+            </div>
+          </div>
+          <div class="est__result">
+            <span class="est__cap">Estimert totalpris</span>
+            <div class="est__total"><span data-calc-total>0</span> kr</div>
+            <ul class="est__break" data-calc-break></ul>
+            <a class="btn btn--primary btn--lg" href="kontakt.html" style="margin-top:1.4rem">Meld deg på<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+            <p class="est__disc">Uforpliktende estimat. Antall kjøretimer varierer fra person til person, og gebyrer hos Statens vegvesen (teoriprøve, oppkjøring og utstedelse av førerkort) kommer i tillegg.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== INFO (alltid synlig) ===================== -->
     <section class="section--tight">
       <div class="container">
@@ -342,5 +381,104 @@
   </div>
 
   <script src="js/main.js?v=13" defer></script>
+  <script>
+  (function () {
+    var root = document.querySelector('[data-calc]');
+    if (!root) return;
+    var CALC = {
+      b:  { label: 'Bil', time: 900, def: 12, min: 5, max: 40, items: [
+        { n: '4.1.1 Bilkjøringens risiko', p: 1200, ob: 1 },
+        { n: '4.1.2 Kjøring i landeveismiljø', p: 5200, ob: 1 },
+        { n: '4.1.3 Planlegging og kjøring i variert miljø', p: 4325, ob: 1 },
+        { n: '4.1.4 Oppsummering', p: 1200, ob: 1 },
+        { n: 'Sikkerhetskurs på bane', p: 5800, ob: 1 },
+        { n: 'Trinnvurdering trinn 2', p: 900, on: 1 },
+        { n: 'Trinnvurdering trinn 3', p: 1200, on: 1 },
+        { n: 'Leie av bil til førerprøve', p: 2600, on: 1 },
+        { n: 'Trafikalt grunnkurs (inkl. førstehjelp)', p: 3000, s: 'hvis du ikke har førerkort fra før' }
+      ] },
+      mc: { label: 'Motorsykkel', time: 1260, def: 10, min: 4, max: 30, note: 'Eksemplet viser mellomtung (A2). Sikkerhetskurs på vei varierer for lett (A1) og tung (A).', items: [
+        { n: 'Grunnkurs MC', p: 1750, ob: 1 },
+        { n: 'Kurs i presis kjøreteknikk (inkl. baneleie, Berkåk)', p: 7350, ob: 1 },
+        { n: 'Kjøring til/fra bane', p: 5040, ob: 1 },
+        { n: 'Sikkerhetskurs på vei (A2)', p: 6300, ob: 1 },
+        { n: 'Trinnvurdering trinn 2', p: 1260, on: 1 },
+        { n: 'Trinnvurdering trinn 3', p: 1680, on: 1 },
+        { n: 'Leie av MC til førerprøve', p: 2750, on: 1 }
+      ] },
+      t:  { label: 'Traktor', time: 1300, def: 8, min: 3, max: 25, items: [
+        { n: 'Trinnvurdering trinn 2', p: 1300, on: 1 },
+        { n: 'Trinnvurdering trinn 3', p: 1735, on: 1 },
+        { n: 'Kurs i lastsikring', p: 1300, on: 1 },
+        { n: 'Leie av traktor og tilhenger til førerprøve', p: 2600, on: 1 }
+      ] },
+      be: { label: 'Tilhenger BE', time: 1050, def: 6, min: 2, max: 20, items: [
+        { n: 'Sikkerhetskurs på vei', p: 3150, ob: 1 },
+        { n: 'Kurs i lastsikring', p: 1300, ob: 1 },
+        { n: 'Trinnvurdering trinn 2', p: 1050, on: 1 },
+        { n: 'Trinnvurdering trinn 3', p: 1400, on: 1 },
+        { n: 'Leie av bil og tilhenger til førerprøve', p: 2650, on: 1 }
+      ] },
+      am: { label: 'Moped AM', notime: 1, note: 'Gjelder AM146 (tohjuls moped). For AM147 (mopedbil) er all obligatorisk opplæring kr 12 250.', items: [
+        { n: 'Grunnkurs moped og alle praktiske timer (AM146)', p: 12735, ob: 1 }
+      ] },
+      tgk: { label: 'Trafikalt grunnkurs', notime: 1, items: [
+        { n: 'Trafikalt grunnkurs (inkl. førstehjelp)', p: 3000, ob: 1 },
+        { n: 'Trafikant i mørket (mørkekjøring)', p: 2600, ob: 1 },
+        { n: 'Kurs i førstehjelp (separat)', p: 1600, s: 'valgfritt tillegg' }
+      ] }
+    };
+    var ORDER = ['b', 'mc', 't', 'be', 'am', 'tgk'];
+    var kr = function (n) { return Number(n).toLocaleString('nb-NO'); };
+    var q = function (s) { return root.querySelector(s); };
+    var segEl = q('[data-calc-classes]'), itemsEl = q('[data-calc-items]'), timeWrap = q('[data-calc-timewrap]'),
+      timeValEl = q('[data-calc-timeval]'), timePriceEl = q('[data-calc-timeprice]'), totalEl = q('[data-calc-total]'),
+      breakEl = q('[data-calc-break]'), noteEl = q('[data-calc-note]');
+    var cur = 'b', count = CALC.b.def;
+
+    ORDER.forEach(function (k) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = CALC[k].label; b.setAttribute('data-k', k); b.setAttribute('role', 'tab');
+      b.addEventListener('click', function () { select(k); });
+      segEl.appendChild(b);
+    });
+
+    function select(k) {
+      cur = k; var c = CALC[k]; count = c.notime ? 0 : c.def;
+      Array.prototype.forEach.call(segEl.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+      timeWrap.style.display = c.notime ? 'none' : '';
+      if (!c.notime) { timeValEl.textContent = count; timePriceEl.textContent = kr(c.time) + ' kr per time à 45 min'; }
+      var stepEl = q('[data-calc-itemstep]'); if (stepEl) stepEl.textContent = c.notime ? '2' : '3';
+      noteEl.textContent = c.note || '';
+      itemsEl.innerHTML = c.items.map(function (it, i) {
+        var checked = (it.ob || it.on) ? 'checked' : '', disabled = it.ob ? 'disabled' : '', sub = it.ob ? 'obligatorisk' : (it.s || '');
+        return '<li><label><input type="checkbox" data-i="' + i + '" ' + checked + ' ' + disabled + '>' +
+          '<span class="est-pack__name"><b>' + it.n + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span></label>' +
+          '<span class="est-pack__p">' + kr(it.p) + ' kr</span></li>';
+      }).join('');
+      Array.prototype.forEach.call(itemsEl.querySelectorAll('input'), function (inp) { inp.addEventListener('change', compute); });
+      compute();
+    }
+
+    function compute() {
+      var c = CALC[cur], timeTotal = c.notime ? 0 : count * c.time, obTotal = 0, valTotal = 0, valCount = 0;
+      Array.prototype.forEach.call(itemsEl.querySelectorAll('input'), function (inp) {
+        if (!inp.checked) return; var it = c.items[+inp.getAttribute('data-i')];
+        if (it.ob) obTotal += it.p; else { valTotal += it.p; valCount++; }
+      });
+      totalEl.textContent = kr(timeTotal + obTotal + valTotal);
+      var rows = [];
+      if (!c.notime) rows.push(['Kjøretimer (' + count + ' stk)', kr(timeTotal)]);
+      if (obTotal) rows.push(['Obligatorisk opplæring', kr(obTotal)]);
+      if (valTotal) rows.push(['Valgfritt (' + valCount + ' post' + (valCount === 1 ? '' : 'er') + ')', kr(valTotal)]);
+      breakEl.innerHTML = rows.map(function (r) { return '<li><span>' + r[0] + '</span><b class="est__amt">' + r[1] + ' kr</b></li>'; }).join('');
+    }
+
+    q('[data-calc-dec]').addEventListener('click', function () { var c = CALC[cur]; if (c.notime) return; count = Math.max(c.min, count - 1); timeValEl.textContent = count; compute(); });
+    q('[data-calc-inc]').addEventListener('click', function () { var c = CALC[cur]; if (c.notime) return; count = Math.min(c.max, count + 1); timeValEl.textContent = count; compute(); });
+
+    select('b');
+  })();
+  </script>
 </body>
 </html>
