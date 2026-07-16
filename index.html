@@ -25,42 +25,43 @@
   <meta name="geo.placename" content="Tynset">
   <link rel="stylesheet" href="css/styles.css?v=43">
   <style>
-    /* ---------- Klasser: high-end bento (Trafikkskolesenteret) ---------- */
-    .kgrid { display: grid; gap: clamp(.8rem, 1.3vw, 1.1rem); grid-template-columns: 1fr; }
-    @media (min-width: 560px) { .kgrid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 960px) { .kgrid { grid-template-columns: repeat(4, 1fr); } }
-    /* B (mest populær) + TGK er brede «feature»-fliser – diagonal bento-rytme */
-    .kcard--wide { grid-column: span 2; }
-    @media (max-width: 559px) { .kcard--wide { grid-column: auto; } }
-
-    .kcard { position: relative; display: flex; flex-direction: column; min-height: clamp(232px, 29vw, 264px); padding: clamp(1.4rem, 2.2vw, 1.85rem); border-radius: 22px; overflow: hidden; isolation: isolate; color: #fff; text-decoration: none; background: linear-gradient(158deg, #16384B 0%, #0C1E2A 76%); box-shadow: 0 14px 34px rgba(8,22,32,.16); transition: transform .55s var(--ease), box-shadow .55s var(--ease); }
-    /* hårfin ramme som lyser opp ved hover (skarp oppå foto) */
-    .kcard::before { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.11); transition: box-shadow .45s var(--ease); }
-    .kcard::after { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(30rem 22rem at 118% -14%, rgba(55,167,196,.16), transparent 60%); transition: background .55s var(--ease); }
-    .kcard:hover { transform: translateY(-7px); box-shadow: 0 30px 62px rgba(8,22,32,.36); }
-    .kcard:hover::before { box-shadow: inset 0 0 0 1px rgba(55,167,196,.6); }
-    .kcard--feat { background: linear-gradient(158deg, #1C647B 0%, #0E3142 80%); }
-
-    .kcard__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-    .kcard__code { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 4.4vw, 3.3rem); line-height: .82; letter-spacing: -.05em; color: #fff; text-shadow: 0 2px 22px rgba(0,0,0,.4); }
-    .kcard--wide .kcard__code { font-size: clamp(3rem, 4.8vw, 4rem); }
-    .kcard__code::after { content: ''; display: block; width: 30px; height: 3px; margin-top: .7rem; border-radius: 3px; background: var(--accent-bright); box-shadow: 0 0 14px rgba(55,167,196,.7); transition: width .5s var(--ease); }
-    .kcard:hover .kcard__code::after { width: 62px; }
-    .kcard__go { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.13); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.28); transition: background-color .35s var(--ease), border-color .35s var(--ease), transform .5s var(--ease-spring); }
-    .kcard:hover .kcard__go { background: var(--accent-bright); border-color: var(--accent-bright); transform: translate(4px, -4px); }
-    .kcard__go svg { width: 17px; height: 17px; color: #fff; }
-    .kcard__body { margin-top: auto; padding-top: 1.3rem; }
-    .kcard__tag { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: .6rem; letter-spacing: .13em; text-transform: uppercase; color: #0C1E2A; background: var(--gold); padding: .3rem .62rem; border-radius: 999px; margin-bottom: .65rem; box-shadow: 0 5px 16px rgba(232,163,61,.4); }
-    .kcard h3 { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.12rem, 1.5vw, 1.22rem); letter-spacing: -.01em; margin: 0 0 .32rem; }
-    .kcard--wide h3 { font-size: clamp(1.3rem, 1.9vw, 1.55rem); }
-    .kcard p { color: rgba(255,255,255,.75); font-size: .92rem; line-height: 1.45; margin: 0; max-width: 44ch; }
-    /* Kort med foto-bakgrunn (scrim holder teksten lesbar, hover gir aksent-glød) */
-    .kcard__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
-    .kcard__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.005); transition: transform 1.3s var(--ease); }
-    .kcard--photo { background: var(--bg-deep); }
-    .kcard--photo:hover .kcard__media img { transform: scale(1.075); }
-    .kcard--photo::after { background: linear-gradient(180deg, rgba(6,18,26,.5) 0%, rgba(6,18,26,.22) 34%, rgba(6,18,26,.58) 70%, rgba(6,18,26,.94) 100%); }
-    .kcard--photo:hover::after { background: radial-gradient(22rem 15rem at 50% 124%, rgba(55,167,196,.34), transparent 60%), linear-gradient(180deg, rgba(6,18,26,.5) 0%, rgba(6,18,26,.22) 34%, rgba(6,18,26,.58) 70%, rgba(6,18,26,.94) 100%); }
+    /* ---------- Klasse-utforsker (interaktiv, Trafikkskolesenteret) ---------- */
+    .explorer { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 900px) { .explorer { grid-template-columns: minmax(270px, 330px) 1fr; gap: 1.3rem; } }
+    /* Venstre: klasseliste (vannrett på mobil, loddrett på desktop) */
+    .explorer__list { display: flex; gap: .55rem; overflow-x: auto; padding: .1rem .1rem .4rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .explorer__list::-webkit-scrollbar { display: none; }
+    @media (min-width: 900px) { .explorer__list { flex-direction: column; overflow: visible; gap: .5rem; padding: 0; } }
+    .explorer__item { flex: 0 0 auto; display: flex; align-items: center; gap: .85rem; text-align: left; padding: .85rem 1rem; border-radius: 15px; border: 1px solid var(--hairline); background: var(--surface); cursor: pointer; font: inherit; transition: border-color .3s var(--ease), background-color .35s var(--ease), box-shadow .35s var(--ease); }
+    @media (min-width: 900px) { .explorer__item { width: 100%; } }
+    .explorer__item:hover { border-color: rgba(23,96,122,.45); }
+    .explorer__item.is-active { background: var(--bg-deep); border-color: var(--bg-deep); box-shadow: 0 12px 30px rgba(8,22,32,.2); }
+    .explorer__code { font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; line-height: 1; letter-spacing: -.03em; color: var(--accent); min-width: 1.7em; text-align: center; }
+    .explorer__item.is-active .explorer__code { color: var(--accent-bright); }
+    .explorer__txt { display: flex; flex-direction: column; gap: .12rem; }
+    .explorer__name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--ink); white-space: nowrap; }
+    .explorer__item.is-active .explorer__name { color: #fff; }
+    .explorer__sub { font-size: .8rem; color: var(--muted); }
+    .explorer__item.is-active .explorer__sub { color: rgba(255,255,255,.6); }
+    .explorer__arrow { margin-left: auto; color: var(--accent-bright); opacity: 0; transform: translateX(-5px); transition: opacity .3s var(--ease), transform .3s var(--ease); font-weight: 700; }
+    @media (min-width: 900px) { .explorer__item.is-active .explorer__arrow { opacity: 1; transform: none; } }
+    @media (max-width: 899px) { .explorer__sub, .explorer__arrow { display: none; } }
+    /* Høyre: feature-panel */
+    .explorer__feature { position: relative; display: grid; border-radius: 22px; overflow: hidden; min-height: 300px; background: var(--bg-deep); isolation: isolate; }
+    @media (min-width: 900px) { .explorer__feature { min-height: 480px; } }
+    .feat { grid-area: 1 / 1; position: relative; display: flex; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.6rem); color: #fff; opacity: 0; visibility: hidden; transition: opacity .5s var(--ease); }
+    .feat.is-active { opacity: 1; visibility: visible; }
+    .feat__media { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+    .feat__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.05); transition: transform 7s linear; }
+    .feat.is-active .feat__media img { transform: scale(1.13); }
+    .feat::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(6,18,26,.32) 0%, rgba(6,18,26,.18) 38%, rgba(6,18,26,.74) 76%, rgba(6,18,26,.96) 100%); }
+    .feat__code { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 5.5vw, 4.4rem); line-height: .82; letter-spacing: -.05em; text-shadow: 0 2px 26px rgba(0,0,0,.45); }
+    .feat__body { margin-top: auto; padding-top: 1.4rem; }
+    .feat__body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.45rem, 2.6vw, 2rem); letter-spacing: -.015em; margin: 0 0 .55rem; color: #fff; }
+    .feat__body p { color: rgba(255,255,255,.85); font-size: clamp(.96rem, 1.1vw, 1.04rem); line-height: 1.5; max-width: 48ch; margin: 0 0 1.2rem; }
+    .feat__facts { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; margin: 0 0 1.5rem; }
+    .feat__facts li { display: inline-flex; align-items: center; font-size: .84rem; font-weight: 600; color: #fff; padding: .4rem .85rem; border-radius: 999px; background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .feat__body .btn { align-self: flex-start; }
     .range-note { text-align: center; color: var(--muted); font-size: .96rem; margin-top: 1.7rem; }
     .range-note strong { color: var(--ink); }
     /* ---------- Pris-teaser (forside) ---------- */
@@ -182,75 +183,80 @@
           <h2>Hva vil du ta?</h2>
           <p class="measure" style="margin:.9rem auto 0">Vi tar deg hele veien – enten det er første bil, motorsykkel til sommeren eller traktor til gården. Alt på ett sted, med lærere som kjenner distriktet.</p>
         </div>
-        <div class="kgrid reveal">
-          <a class="kcard kcard--feat kcard--photo kcard--wide" href="klasse-b.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/automat.jpg" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">B</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Bil – automat eller manuell</h3>
-              <p>Personbil. Hele veien fra første kjøretime til bestått førerprøve.</p>
-            </div>
-          </a>
-          <a class="kcard kcard--photo" href="klasse-a-mc.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/motorsykkel-a.jpg" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">A</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Motorsykkel</h3>
-              <p>Lett (A1), mellomtung (A2) og tung (A). Trinnkurs og sikkerhetskurs på bane og vei.</p>
-            </div>
-          </a>
-          <a class="kcard kcard--photo" href="klasse-t.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/traktor.jpg" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">T</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Traktor</h3>
-              <p>Traktor med og uten tilhenger. Kan tas fra 16 år – nyttig på gård og i arbeid.</p>
-            </div>
-          </a>
-          <a class="kcard kcard--photo" href="klasse-be.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/bil-camping.jpg" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">BE</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Bil med tilhenger</h3>
-              <p>Tilhenger over 750 kg og tyngre vogntog. Vi kjører også utvidelse til B96.</p>
-            </div>
-          </a>
-          <a class="kcard kcard--photo" href="klasse-am.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/moped-duo.png" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">AM</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Moped</h3>
-              <p>Tohjuls moped (AM146) og moped på tre/fire hjul (AM147). Fra 16 år.</p>
-            </div>
-          </a>
-          <a class="kcard kcard--photo kcard--wide" href="trafikalt-grunnkurs.html">
-            <span class="kcard__media" aria-hidden="true"><img decoding="async" src="img/trafikalt.jpg" alt="" loading="lazy"></span>
-            <div class="kcard__top">
-              <span class="kcard__code">TGK</span>
-              <span class="kcard__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-            </div>
-            <div class="kcard__body">
-              <h3>Trafikalt grunnkurs</h3>
-              <p>Det obligatoriske førstesteget mot førerkortet. Kan tas fra du fyller 15 år.</p>
-            </div>
-          </a>
+        <div class="explorer reveal" data-explorer>
+          <div class="explorer__list" role="tablist" aria-label="Velg klasse">
+            <button type="button" class="explorer__item is-active" data-cls="b" role="tab" aria-selected="true"><span class="explorer__code">B</span><span class="explorer__txt"><span class="explorer__name">Bil</span><span class="explorer__sub">Automat & manuell</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+            <button type="button" class="explorer__item" data-cls="a" role="tab" aria-selected="false"><span class="explorer__code">A</span><span class="explorer__txt"><span class="explorer__name">Motorsykkel</span><span class="explorer__sub">A1 · A2 · A</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+            <button type="button" class="explorer__item" data-cls="t" role="tab" aria-selected="false"><span class="explorer__code">T</span><span class="explorer__txt"><span class="explorer__name">Traktor</span><span class="explorer__sub">Med og uten tilhenger</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+            <button type="button" class="explorer__item" data-cls="be" role="tab" aria-selected="false"><span class="explorer__code">BE</span><span class="explorer__txt"><span class="explorer__name">Bil med tilhenger</span><span class="explorer__sub">BE og B96</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+            <button type="button" class="explorer__item" data-cls="am" role="tab" aria-selected="false"><span class="explorer__code">AM</span><span class="explorer__txt"><span class="explorer__name">Moped</span><span class="explorer__sub">AM146 · AM147</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+            <button type="button" class="explorer__item" data-cls="tgk" role="tab" aria-selected="false"><span class="explorer__code">TGK</span><span class="explorer__txt"><span class="explorer__name">Trafikalt grunnkurs</span><span class="explorer__sub">Obligatorisk førstesteg</span></span><span class="explorer__arrow" aria-hidden="true">→</span></button>
+          </div>
+
+          <div class="explorer__feature">
+            <article class="feat is-active" data-cls="b">
+              <div class="feat__media"><img decoding="async" src="img/automat.jpg" alt="Klasse B – bil" loading="lazy"></div>
+              <span class="feat__code">B</span>
+              <div class="feat__body">
+                <h3>Bil – automat eller manuell</h3>
+                <p>Personbil, automat eller manuell. Vi tar deg hele veien fra første kjøretime til bestått førerprøve, med personlig trafikklærer.</p>
+                <ul class="feat__facts"><li>Fra 18 år</li><li>Kjøretime fra 900 kr</li><li>Tynset & Røros</li></ul>
+                <a class="btn btn--primary" href="klasse-b.html">Les mer om klasse B<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+            <article class="feat" data-cls="a">
+              <div class="feat__media"><img decoding="async" src="img/motorsykkel-a.jpg" alt="Klasse A – motorsykkel" loading="lazy"></div>
+              <span class="feat__code">A</span>
+              <div class="feat__body">
+                <h3>Motorsykkel – A1, A2 og A</h3>
+                <p>Lett (A1), mellomtung (A2) og tung motorsykkel (A). Grunnkurs og sikkerhetskurs på bane og veg – MC er en av spesialitetene våre.</p>
+                <ul class="feat__facts"><li>Fra 16 år (A1)</li><li>Kjøretime fra 1 260 kr</li><li>Tynset</li></ul>
+                <a class="btn btn--primary" href="klasse-a-mc.html">Les mer om klasse A<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+            <article class="feat" data-cls="t">
+              <div class="feat__media"><img decoding="async" src="img/traktor.jpg" alt="Klasse T – traktor" loading="lazy"></div>
+              <span class="feat__code">T</span>
+              <div class="feat__body">
+                <h3>Traktor – klasse T</h3>
+                <p>Traktor med og uten tilhenger – nyttig på gård, i sommerjobb og i arbeid. Du øver på vår egen traktor med tilhenger.</p>
+                <ul class="feat__facts"><li>Fra 16 år</li><li>Kjøretime fra 1 300 kr</li><li>Tynset</li></ul>
+                <a class="btn btn--primary" href="klasse-t.html">Les mer om klasse T<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+            <article class="feat" data-cls="be">
+              <div class="feat__media"><img decoding="async" src="img/bil-camping.jpg" alt="Klasse BE – bil med tilhenger" loading="lazy"></div>
+              <span class="feat__code">BE</span>
+              <div class="feat__body">
+                <h3>Bil med tilhenger – BE</h3>
+                <p>For tilhenger over 750 kg og tyngre vogntog – til hytta, hesten, båten eller jobben. Vi kjører også utvidelse til B96.</p>
+                <ul class="feat__facts"><li>Krever klasse B</li><li>Kjøretime fra 1 050 kr</li><li>Tynset & Røros</li></ul>
+                <a class="btn btn--primary" href="klasse-be.html">Les mer om klasse BE<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+            <article class="feat" data-cls="am">
+              <div class="feat__media"><img decoding="async" src="img/moped-duo.png" alt="Klasse AM – moped og mopedbil" loading="lazy"></div>
+              <span class="feat__code">AM</span>
+              <div class="feat__body">
+                <h3>Moped – klasse AM</h3>
+                <p>Tohjuls moped (AM146) og mopedbil (AM147). For mange den aller første lappen – fra du fyller 16 år.</p>
+                <ul class="feat__facts"><li>Fra 16 år</li><li>Kjøretime fra 875 kr</li><li>Tynset</li></ul>
+                <a class="btn btn--primary" href="klasse-am.html">Les mer om klasse AM<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+            <article class="feat" data-cls="tgk">
+              <div class="feat__media"><img decoding="async" src="img/trafikalt.jpg" alt="Trafikalt grunnkurs" loading="lazy"></div>
+              <span class="feat__code">TGK</span>
+              <div class="feat__body">
+                <h3>Trafikalt grunnkurs</h3>
+                <p>Det obligatoriske første steget mot førerkortet – inkludert førstehjelp og trafikant i mørket. Kan tas fra du fyller 15 år.</p>
+                <ul class="feat__facts"><li>Fra 15 år</li><li>Inkl. førstehjelp</li><li>Tynset & Røros</li></ul>
+                <a class="btn btn--primary" href="trafikalt-grunnkurs.html">Les mer om trafikalt grunnkurs<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+              </div>
+            </article>
+          </div>
         </div>
-        <p class="range-note reveal"><strong>Bil, tilhenger og trafikalt grunnkurs</strong> tilbys både i Tynset og på Røros – øvrige klasser ved kontoret i Tynset. Usikker på hva som passer deg? <a href="kontakt.html" style="color:var(--accent);font-weight:600">Ta kontakt</a>, så hjelper vi deg å finne riktig klasse.</p>
+        <p class="range-note reveal"><strong>Vi møter deg gjerne der det er mest praktisk.</strong> Bil, tilhenger og trafikalt grunnkurs tilbys både i Tynset og på Røros – øvrige klasser ved kontoret i Tynset. Usikker på hva som passer deg? <a href="kontakt.html" style="color:var(--accent);font-weight:600">Ta kontakt</a>, så finner vi riktig klasse for deg.</p>
       </div>
     </section>
 
@@ -377,5 +383,23 @@
   <script src="data/kurs.js?v=1" defer></script>
   <script src="js/kommende-kurs.js?v=2" defer></script>
   <script src="js/main.js?v=13" defer></script>
+  <script>
+  (function () {
+    var root = document.querySelector('[data-explorer]');
+    if (!root) return;
+    var items = Array.prototype.slice.call(root.querySelectorAll('.explorer__item'));
+    var feats = Array.prototype.slice.call(root.querySelectorAll('.feat'));
+    function activate(cls) {
+      items.forEach(function (i) { var on = i.getAttribute('data-cls') === cls; i.classList.toggle('is-active', on); i.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      feats.forEach(function (f) { f.classList.toggle('is-active', f.getAttribute('data-cls') === cls); });
+    }
+    items.forEach(function (i) {
+      var cls = i.getAttribute('data-cls');
+      i.addEventListener('mouseenter', function () { activate(cls); });
+      i.addEventListener('focus', function () { activate(cls); });
+      i.addEventListener('click', function () { activate(cls); });
+    });
+  })();
+  </script>
 </body>
 </html>
