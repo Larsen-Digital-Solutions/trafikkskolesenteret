@@ -451,9 +451,10 @@
       var stepEl = q('[data-calc-itemstep]'); if (stepEl) stepEl.textContent = c.notime ? '2' : '3';
       noteEl.textContent = c.note || '';
       itemsEl.innerHTML = c.items.map(function (it, i) {
-        var checked = (it.ob || it.on) ? 'checked' : '', disabled = it.ob ? 'disabled' : '', sub = it.ob ? 'obligatorisk' : (it.s || '');
-        return '<li><label><input type="checkbox" data-i="' + i + '" ' + checked + ' ' + disabled + '>' +
-          '<span class="est-pack__name"><b>' + it.n + '</b>' + (sub ? '<small>' + sub + '</small>' : '') + '</span></label>' +
+        var checked = (it.ob || it.on) ? 'checked' : '';
+        var subHtml = it.ob ? '<small style="color:var(--accent);font-weight:600">Obligatorisk</small>' : (it.s ? '<small>' + it.s + '</small>' : '');
+        return '<li><label><input type="checkbox" data-i="' + i + '" ' + checked + '>' +
+          '<span class="est-pack__name"><b>' + it.n + '</b>' + subHtml + '</span></label>' +
           '<span class="est-pack__p">' + kr(it.p) + ' kr</span></li>';
       }).join('');
       Array.prototype.forEach.call(itemsEl.querySelectorAll('input'), function (inp) { inp.addEventListener('change', compute); });
