@@ -15,8 +15,8 @@ window.JD_KURS = {
   },
   "kurs": [
     // EKSEMPELKURS – bytt ut med ekte datoer fra TABS-kursoversikten før lansering.
-    { "avdeling": "tynset", "klasse": "TGK", "navn": "Trafikalt grunnkurs", "start": "2026-08-18T17:00", "slutt": "2026-08-18T20:00", "pris": 1990, "plasser": "3+" },
-    { "avdeling": "tynset", "klasse": "TGK", "navn": "Trafikalt grunnkurs", "start": "2026-09-15T17:00", "slutt": "2026-09-15T20:00", "pris": 1990, "plasser": 6 },
-    { "avdeling": "tynset", "klasse": "TIM", "navn": "Trafikant i mørket", "start": "2026-10-07T17:00", "slutt": "2026-10-07T20:00", "pris": 1490, "plasser": 2 }
+    { "avdeling": "tynset", "klasse": "TGK", "navn": "Trafikalt grunnkurs", "start": "2026-08-18T17:00", "slutt": "2026-08-18T20:00", "pris": 3000, "plasser": "3+" },
+    { "avdeling": "tynset", "klasse": "TGK", "navn": "Trafikalt grunnkurs", "start": "2026-09-15T17:00", "slutt": "2026-09-15T20:00", "pris": 3000, "plasser": 6 },
+    { "avdeling": "tynset", "klasse": "TIM", "navn": "Trafikant i mørket", "start": "2026-10-07T17:00", "slutt": "2026-10-07T20:00", "pris": 2600, "plasser": 2 }
   ]
 };
