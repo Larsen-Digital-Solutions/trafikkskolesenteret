@@ -282,6 +282,7 @@
             </div>
             <div class="est__field">
               <div class="est__label"><span><span class="est__step" data-calc-itemstep>3</span> Kurs og obligatorisk opplæring</span></div>
+              <div class="seg" data-calc-sub role="tablist" aria-label="Velg motorsykkelklasse" style="margin-bottom:1rem;display:none"></div>
               <div class="est-pack"><ul class="est-pack__list" data-calc-items></ul></div>
               <p class="est__note" data-calc-note style="font-size:.82rem;color:var(--muted);margin:.7rem 0 0"></p>
             </div>
@@ -354,7 +355,7 @@
         <div>
           <h4>Kontakt</h4>
           <ul class="footer__contact">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a11 11 0 0 0 5 5L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><a href="tel:+4790744745">90 74 47 45</a> <span style="opacity:.45">·</span> <a href="tel:+4790917542">90 91 75 42</a></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span style="display:inline-flex;flex-direction:column;gap:.1rem"><a href="mailto:steinjronningen@gmail.com">steinjronningen@gmail.com</a><a href="mailto:chrisoveronningen@gmail.com">chrisoveronningen@gmail.com</a></span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2 1.5a11 11 0 0 0 5 5L16 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg>Stein Jarle <a href="tel:+4790744745">90 74 47 45</a> <span style="opacity:.45">·</span> Chris Ove <a href="tel:+4790917542">90 91 75 42</a></li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span style="display:inline-flex;flex-direction:column;gap:.15rem"><a href="mailto:steinjronningen@gmail.com">Stein Jarle · steinjronningen@gmail.com</a><a href="mailto:chrisoveronningen@gmail.com">Chris Ove · chrisoveronningen@gmail.com</a></span></li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span style="line-height:1.6">Parkveien 14<br>2500 Tynset</span></li>
           </ul>
         </div>
@@ -389,15 +390,34 @@
         { n: 'Leie av bil til førerprøve', p: 2600, on: 1 },
         { n: 'Trafikalt grunnkurs (inkl. førstehjelp)', p: 3000, s: 'hvis du ikke har førerkort fra før' }
       ] },
-      mc: { label: 'Motorsykkel', time: 1260, def: 10, min: 4, max: 30, note: 'Eksemplet viser mellomtung (A2). Sikkerhetskurs på vei: A1 og A2 kr 6 300, A kr 10 080. For lett motorsykkel (A1) kommer sikkerhetskurs i trafikk (kr 5 040) i tillegg.', items: [
-        { n: 'Grunnkurs MC', p: 1750, ob: 1 },
-        { n: 'Kurs i presis kjøreteknikk (inkl. baneleie, Berkåk)', p: 7350, ob: 1 },
-        { n: 'Kjøring til/fra bane', p: 5040, ob: 1 },
-        { n: 'Sikkerhetskurs på vei (A2)', p: 6300, ob: 1 },
-        { n: 'Trinnvurdering trinn 2', p: 1260, on: 1 },
-        { n: 'Trinnvurdering trinn 3', p: 1680, on: 1 },
-        { n: 'Leie av MC til førerprøve', p: 2750, on: 1 }
-      ] },
+      mc: { label: 'Motorsykkel', time: 1260, def: 10, min: 4, max: 30, subDef: 'a2', note: 'Baneleie på Berkåk er inkludert i kurs i presis kjøreteknikk. Velg klasse over for riktige poster.', sub: {
+        a1: { label: 'Lett (A1)', items: [
+          { n: 'Grunnkurs MC', p: 1750, ob: 1 },
+          { n: 'Sikkerhetskurs i trafikk', p: 5040, ob: 1 },
+          { n: 'Sikkerhetskurs på vei', p: 6300, ob: 1 },
+          { n: 'Trinnvurdering trinn 2', p: 1260, on: 1 },
+          { n: 'Trinnvurdering trinn 3', p: 1680, on: 1 },
+          { n: 'Leie av MC til førerprøve', p: 2750, on: 1 }
+        ] },
+        a2: { label: 'Mellomtung (A2)', items: [
+          { n: 'Grunnkurs MC', p: 1750, ob: 1 },
+          { n: 'Kurs i presis kjøreteknikk (inkl. baneleie, Berkåk)', p: 7350, ob: 1 },
+          { n: 'Kjøring til/fra bane', p: 5040, ob: 1 },
+          { n: 'Sikkerhetskurs på vei', p: 6300, ob: 1 },
+          { n: 'Trinnvurdering trinn 2', p: 1260, on: 1 },
+          { n: 'Trinnvurdering trinn 3', p: 1680, on: 1 },
+          { n: 'Leie av MC til førerprøve', p: 2750, on: 1 }
+        ] },
+        a: { label: 'Tung (A)', items: [
+          { n: 'Grunnkurs MC', p: 1750, ob: 1 },
+          { n: 'Kurs i presis kjøreteknikk (inkl. baneleie, Berkåk)', p: 7350, ob: 1 },
+          { n: 'Kjøring til/fra bane', p: 5040, ob: 1 },
+          { n: 'Sikkerhetskurs på vei', p: 10080, ob: 1 },
+          { n: 'Trinnvurdering trinn 2', p: 1260, on: 1 },
+          { n: 'Trinnvurdering trinn 3', p: 1680, on: 1 },
+          { n: 'Leie av MC til førerprøve', p: 2750, on: 1 }
+        ] }
+      } },
       t:  { label: 'Traktor', time: 1300, def: 8, min: 3, max: 25, items: [
         { n: 'Trinnvurdering trinn 2', p: 1300, on: 1 },
         { n: 'Trinnvurdering trinn 3', p: 1735, on: 1 },
@@ -425,8 +445,8 @@
     var q = function (s) { return root.querySelector(s); };
     var segEl = q('[data-calc-classes]'), itemsEl = q('[data-calc-items]'), timeWrap = q('[data-calc-timewrap]'),
       timeValEl = q('[data-calc-timeval]'), timePriceEl = q('[data-calc-timeprice]'), totalEl = q('[data-calc-total]'),
-      breakEl = q('[data-calc-break]'), noteEl = q('[data-calc-note]');
-    var cur = 'b', count = CALC.b.def;
+      breakEl = q('[data-calc-break]'), noteEl = q('[data-calc-note]'), subEl = q('[data-calc-sub]');
+    var cur = 'b', mcSub = 'a2', count = CALC.b.def;
 
     ORDER.forEach(function (k) {
       var b = document.createElement('button');
@@ -435,14 +455,11 @@
       segEl.appendChild(b);
     });
 
-    function select(k) {
-      cur = k; var c = CALC[k]; count = c.notime ? 0 : c.def;
-      Array.prototype.forEach.call(segEl.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
-      timeWrap.style.display = c.notime ? 'none' : '';
-      if (!c.notime) { timeValEl.textContent = count; timePriceEl.textContent = kr(c.time) + ' kr per time à 45 min'; }
-      var stepEl = q('[data-calc-itemstep]'); if (stepEl) stepEl.textContent = c.notime ? '2' : '3';
-      noteEl.textContent = c.note || '';
-      itemsEl.innerHTML = c.items.map(function (it, i) {
+    function itemsOf(c) { return c.sub ? c.sub[mcSub].items : c.items; }
+
+    function paintItems() {
+      var c = CALC[cur];
+      itemsEl.innerHTML = itemsOf(c).map(function (it, i) {
         var checked = (it.ob || it.on) ? 'checked' : '';
         var subHtml = it.ob ? '<small style="color:var(--accent);font-weight:600">Obligatorisk</small>' : (it.s ? '<small>' + it.s + '</small>' : '');
         return '<li><label><input type="checkbox" data-i="' + i + '" ' + checked + '>' +
@@ -453,10 +470,35 @@
       compute();
     }
 
+    function select(k) {
+      cur = k; var c = CALC[k]; count = c.notime ? 0 : c.def;
+      Array.prototype.forEach.call(segEl.children, function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+      timeWrap.style.display = c.notime ? 'none' : '';
+      if (!c.notime) { timeValEl.textContent = count; timePriceEl.textContent = kr(c.time) + ' kr per time à 45 min'; }
+      var stepEl = q('[data-calc-itemstep]'); if (stepEl) stepEl.textContent = c.notime ? '2' : '3';
+      noteEl.textContent = c.note || '';
+      if (c.sub) {
+        if (c.subDef) mcSub = c.subDef;
+        subEl.style.display = ''; subEl.innerHTML = '';
+        Object.keys(c.sub).forEach(function (sk) {
+          var sb = document.createElement('button');
+          sb.type = 'button'; sb.textContent = c.sub[sk].label; sb.setAttribute('data-sk', sk); sb.setAttribute('role', 'tab');
+          sb.setAttribute('aria-pressed', sk === mcSub ? 'true' : 'false');
+          sb.addEventListener('click', function () {
+            mcSub = sk;
+            Array.prototype.forEach.call(subEl.children, function (x) { x.setAttribute('aria-pressed', x.getAttribute('data-sk') === sk ? 'true' : 'false'); });
+            paintItems();
+          });
+          subEl.appendChild(sb);
+        });
+      } else { subEl.style.display = 'none'; }
+      paintItems();
+    }
+
     function compute() {
-      var c = CALC[cur], timeTotal = c.notime ? 0 : count * c.time, obTotal = 0, valTotal = 0, valRows = [];
+      var c = CALC[cur], its = itemsOf(c), timeTotal = c.notime ? 0 : count * c.time, obTotal = 0, valTotal = 0, valRows = [];
       Array.prototype.forEach.call(itemsEl.querySelectorAll('input'), function (inp) {
-        if (!inp.checked) return; var it = c.items[+inp.getAttribute('data-i')];
+        if (!inp.checked) return; var it = its[+inp.getAttribute('data-i')];
         if (it.ob) obTotal += it.p; else { valTotal += it.p; valRows.push([it.n, kr(it.p)]); }
       });
       totalEl.textContent = kr(timeTotal + obTotal + valTotal);
