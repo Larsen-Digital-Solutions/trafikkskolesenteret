@@ -118,20 +118,39 @@
     });
   }
 
-  /* ---------- Skjema (demo: trenger ekte endepunkt før lansering) ---------- */
+  /* ---------- Kontaktskjema (Formsubmit AJAX, ruter til valgt mottaker) ---------- */
   var form = document.querySelector('[data-lead-form]');
   if (form) {
+    var status = form.querySelector('.form__status');
+    var setStatus = function (msg, ok) {
+      if (!status) return;
+      status.textContent = msg;
+      status.className = 'form__status' + (ok ? ' is-ok' : '');
+      status.style.display = 'block';
+      status.setAttribute('role', ok ? 'status' : 'alert');
+    };
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var status = form.querySelector('.form__status');
-      if (status) {
-        status.classList.add('is-ok');
-        status.textContent = 'Takk! Vi har mottatt påmeldingen din og tar kontakt så snart vi kan for å avtale oppstart.';
-        status.setAttribute('role', 'status');
-      }
-      form.querySelectorAll('input, select, textarea').forEach(function (el) {
-        if (el.type !== 'submit' && el.type !== 'checkbox' && el.type !== 'radio') el.value = '';
-      });
+      var btn = form.querySelector('button[type="submit"]');
+      var sel = form.querySelector('[data-recipient]');
+      var opt = sel ? sel.options[sel.selectedIndex] : null;
+      var email = (opt && opt.getAttribute('data-email')) || 'steinjronningen@gmail.com';
+      if (btn) btn.disabled = true;
+      setStatus('Sender …', false);
+      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (data && String(data.success) === 'true') {
+          setStatus('Takk! Meldingen din er sendt. Vi tar kontakt så snart vi kan for å avtale oppstart.', true);
+          form.querySelectorAll('input:not([type=hidden]), textarea').forEach(function (el) {
+            if (el.type !== 'submit') el.value = '';
+          });
+        } else { throw new Error('fail'); }
+      }).catch(function () {
+        setStatus('Beklager, noe gikk galt. Ring eller send SMS til 90 74 47 45 / 90 91 75 42, så hjelper vi deg.', false);
+      }).then(function () { if (btn) btn.disabled = false; });
     });
   }
 

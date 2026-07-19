@@ -144,14 +144,18 @@
               <span class="eyebrow">Meld deg på</span>
               <h2 style="margin:.7rem 0 .4rem">Send oss en melding</h2>
               <p class="muted" style="margin-bottom:1.4rem">Her booker du kjøretimer og kurs: fyll ut skjemaet, eller ta kontakt på e-post eller SMS – så setter vi opp timene for deg. Du booker ikke selv, og det er helt uforpliktende.</p>
-              <!-- TODO: koble skjema til ekte endepunkt (f.eks. Web3Forms) -->
-              <form class="form" data-lead-form novalidate>
+              <form class="form" data-lead-form action="https://formsubmit.co/steinjronningen@gmail.com" method="POST" novalidate>
+                <input type="hidden" name="_subject" value="Ny påmelding fra nettsiden">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;opacity:0">
                 <div class="field--row">
                   <div class="field"><label for="navn">Navn</label><input id="navn" name="navn" type="text" autocomplete="name" required placeholder="Ditt navn"></div>
                   <div class="field"><label for="tlf">Telefon</label><input id="tlf" name="tlf" type="tel" autocomplete="tel" required placeholder="Ditt telefonnummer"></div>
                 </div>
                 <div class="field"><label for="epost">E-post</label><input id="epost" name="epost" type="email" autocomplete="email" placeholder="din@epost.no"></div>
                 <div class="field"><label for="klasse">Hva vil du ta?</label><select id="klasse" name="klasse"><option>Klasse B – bil (automat)</option><option>Klasse B – bil (manuell)</option><option>Klasse A – motorsykkel</option><option>Klasse T – traktor</option><option>Klasse BE – tilhenger</option><option>Moped (klasse AM)</option><option>Trafikalt grunnkurs</option><option>Annet / usikker</option></select></div>
+                <div class="field"><label for="mottaker">Hvem vil du kontakte?</label><select id="mottaker" name="mottaker" data-recipient><option value="Stein Jarle Rønningen" data-email="steinjronningen@gmail.com">Stein Jarle Rønningen</option><option value="Chris Ove Rønningen" data-email="chrisoveronningen@gmail.com">Chris Ove Rønningen</option></select></div>
                 <div class="field"><label for="melding">Melding</label><textarea id="melding" name="melding" placeholder="Skriv gjerne litt om hva du lurer på"></textarea></div>
                 <button class="btn btn--primary btn--lg" type="submit">Send påmelding<span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
                 <p class="form__note">Du kan også ringe eller sende SMS til Stein Jarle på <a href="tel:+4790744745">90 74 47 45</a> eller Chris Ove på <a href="tel:+4790917542">90 91 75 42</a>.</p>
@@ -225,6 +229,6 @@
     <a class="btn btn--primary" href="#meldpaa">Meld deg på</a>
   </div>
 
-  <script src="js/main.js?v=13" defer></script>
+  <script src="js/main.js?v=14" defer></script>
 </body>
 </html>
