@@ -118,7 +118,10 @@
     });
   }
 
-  /* ---------- Kontaktskjema (Formsubmit AJAX, ruter til valgt mottaker) ---------- */
+  /* ---------- Kontaktskjema (AJAX, ruter til valgt mottaker) ----------
+     Mottaker med data-endpoint går via Formspree (Stein), ellers FormSubmit
+     til data-email (Chris). FormSubmit-aktiveringen for Stein lot seg ikke
+     fullføre 22.10.2026, så han fikk et Formspree-skjema i stedet. */
   var form = document.querySelector('[data-lead-form]');
   if (form) {
     var status = form.querySelector('.form__status');
@@ -134,15 +137,27 @@
       var btn = form.querySelector('button[type="submit"]');
       var sel = form.querySelector('[data-recipient]');
       var opt = sel ? sel.options[sel.selectedIndex] : null;
+      var endpoint = opt && opt.getAttribute('data-endpoint');
       var email = (opt && opt.getAttribute('data-email')) || 'steinjronningen@gmail.com';
+      var fd = new FormData(form);
+      if (endpoint) {
+        // Formspree har egen honningfelle (_gotcha), og FormSubmit-feltene skal ikke stå i e-posten.
+        if (fd.get('_honey')) fd.set('_gotcha', fd.get('_honey'));
+        ['_honey', '_template', '_captcha'].forEach(function (k) { fd.delete(k); });
+      }
+      // Svar-til = elevens e-post, så mottakeren kan trykke «Svar» (begge tjenestene leser _replyto).
+      if (fd.get('E-post')) fd.set('_replyto', fd.get('E-post'));
       if (btn) btn.disabled = true;
       setStatus('Sender …', false);
-      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
+      fetch(endpoint || ('https://formsubmit.co/ajax/' + encodeURIComponent(email)), {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      }).then(function (r) { return r.json(); }).then(function (data) {
-        if (data && String(data.success) === 'true') {
+        body: fd
+      }).then(function (r) {
+        return r.json().then(function (data) { return { ok: r.ok, data: data }; });
+      }).then(function (svar) {
+        var data = svar.data;
+        if (svar.ok && data && (data.ok === true || String(data.success) === 'true')) {
           setStatus('Takk! Meldingen din er sendt. Vi tar kontakt så snart vi kan for å avtale oppstart.', true);
           form.querySelectorAll('input:not([type=hidden]), textarea').forEach(function (el) {
             if (el.type !== 'submit') el.value = '';
