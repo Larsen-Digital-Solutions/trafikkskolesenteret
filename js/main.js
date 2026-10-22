@@ -118,7 +118,7 @@
     });
   }
 
-  /* ---------- Kontaktskjema (Formsubmit AJAX, ruter til valgt mottaker) ---------- */
+  /* ---------- Kontaktskjema (egen funksjon /api/kontakt, sender via Resend til valgt lærer) ---------- */
   var form = document.querySelector('[data-lead-form]');
   if (form) {
     var status = form.querySelector('.form__status');
@@ -132,17 +132,16 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var btn = form.querySelector('button[type="submit"]');
-      var sel = form.querySelector('[data-recipient]');
-      var opt = sel ? sel.options[sel.selectedIndex] : null;
-      var email = (opt && opt.getAttribute('data-email')) || 'steinjronningen@gmail.com';
       if (btn) btn.disabled = true;
       setStatus('Sender …', false);
-      fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
+      var felt = {};
+      new FormData(form).forEach(function (v, k) { felt[k] = v; });
+      fetch('/api/kontakt', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(felt)
       }).then(function (r) { return r.json(); }).then(function (data) {
-        if (data && String(data.success) === 'true') {
+        if (data && data.ok === true) {
           setStatus('Takk! Meldingen din er sendt. Vi tar kontakt så snart vi kan for å avtale oppstart.', true);
           form.querySelectorAll('input:not([type=hidden]), textarea').forEach(function (el) {
             if (el.type !== 'submit') el.value = '';
