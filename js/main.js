@@ -127,7 +127,7 @@
     var status = form.querySelector('.form__status');
     var setStatus = function (msg, ok) {
       if (!status) return;
-      status.textContent = msg;
+      status.innerHTML = msg; // bare faste tekster her, aldri det eleven skrev
       status.className = 'form__status' + (ok ? ' is-ok' : '');
       status.style.display = 'block';
       status.setAttribute('role', ok ? 'status' : 'alert');
@@ -164,7 +164,7 @@
           });
         } else { throw new Error('fail'); }
       }).catch(function () {
-        setStatus('Beklager, noe gikk galt. Ring eller send SMS til 90 74 47 45 / 90 91 75 42, så hjelper vi deg.', false);
+        setStatus('Beklager, noe gikk galt. Send e-post direkte til <a href="mailto:steinjronningen@gmail.com">steinjronningen@gmail.com</a> eller <a href="mailto:chrisoveronningen@gmail.com">chrisoveronningen@gmail.com</a>, eller ring eller send SMS til 90 74 47 45 / 90 91 75 42, så hjelper vi deg.', false);
       }).then(function () { if (btn) btn.disabled = false; });
     });
   }
